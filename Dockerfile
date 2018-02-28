@@ -3,9 +3,6 @@ MAINTAINER Lucas Souza <lucasvs@outlook.com>
 
 RUN useradd --system asterisk
 
-## add sngre repo
-RUN echo 'deb http://packages.irontec.com/debian jessie main' >> /etc/apt/sources.list
-
 RUN apt-get update -qq && \
     DEBIAN_FRONTEND=noninteractive \
     apt-get install -y --no-install-recommends \
@@ -47,13 +44,18 @@ RUN apt-get update -qq && \
             python-mysqldb \
             git \
             wget \
+            sox \
+            libsox-fmt-mp3 \
+            vi \
             && \
     apt-get purge -y --auto-remove && rm -rf /var/lib/apt/lists/* && \
     pip install alembic
 
 ## Install sngrep
-RUN wget http://packages.irontec.com/public.key -q -O - | apt-key add - && \
-    apt-get install -y sngrep
+RUN echo 'deb http://packages.irontec.com/debian jessie main' >> /etc/apt/sources.list && \
+    wget http://packages.irontec.com/public.key -q -O - | apt-key add - && \
+    apt-get update -qq && \
+    apt-get install -y --no-install-recommends sngrep
 
 ENV ASTERISK_VERSION=14.7.6 PJPROJECT_VERSION=2.7.2
 COPY build-asterisk.sh /build-asterisk
