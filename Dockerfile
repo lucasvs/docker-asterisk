@@ -56,6 +56,7 @@ RUN echo 'deb http://packages.irontec.com/debian jessie main' >> /etc/apt/source
     apt-get update && apt-get -y -q install wget && \
     wget http://packages.irontec.com/public.key -q -O - | apt-key add - && \
     apt-get update -qq && \
+    DEBIAN_FRONTEND=noninteractive \
     apt-get install -yq sngrep
 
 ENV ASTERISK_VERSION=14.7.6 PJPROJECT_VERSION=2.7.2
