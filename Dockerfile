@@ -6,7 +6,6 @@ RUN useradd --system asterisk
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 
 RUN apt-get update -qq && \
-    DEBIAN_FRONTEND=noninteractive \
     apt-get install -yq --no-install-recommends \
             subversion \
             automake \
@@ -46,9 +45,6 @@ RUN apt-get update -qq && \
             python-mysqldb \
             git \
             wget \
-            sox \
-            libsox-fmt-mp3 \
-            vim \
             && \
     apt-get purge -y --auto-remove && rm -rf /var/lib/apt/lists/* && \
     pip install alembic
@@ -58,10 +54,9 @@ RUN echo 'deb http://packages.irontec.com/debian jessie main' >> /etc/apt/source
     apt-get update && apt-get -y -q install wget && \
     wget http://packages.irontec.com/public.key -q -O - | apt-key add - && \
     apt-get update -qq && \
-    DEBIAN_FRONTEND=noninteractive \
     apt-get install -yq sngrep
 
-ENV ASTERISK_VERSION=14.7.6 PJPROJECT_VERSION=2.7.2
+ENV ASTERISK_VERSION=14.7.3 PJPROJECT_VERSION=2.7.2
 COPY build-asterisk.sh /build-asterisk
 RUN /build-asterisk
 
