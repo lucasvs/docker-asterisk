@@ -3,6 +3,9 @@ MAINTAINER Lucas Souza <lucasvs@outlook.com>
 
 RUN useradd --system asterisk
 
+## add sngre repo
+RUN echo 'deb http://packages.irontec.com/debian jessie main' >> /etc/apt/sources.list
+
 RUN apt-get update -qq && \
     DEBIAN_FRONTEND=noninteractive \
     apt-get install -y --no-install-recommends \
@@ -49,9 +52,7 @@ RUN apt-get update -qq && \
     pip install alembic
 
 ## Install sngrep
-RUN echo 'deb http://packages.irontec.com/debian jessie main' >> /etc/apt/sources.list && \
-    wget http://packages.irontec.com/public.key -q -O - | apt-key add - && \
-    apt-get update && \
+RUN wget http://packages.irontec.com/public.key -q -O - | apt-key add - && \
     apt-get install -y sngrep
 
 ENV ASTERISK_VERSION=14.7.6 PJPROJECT_VERSION=2.7.2
