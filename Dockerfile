@@ -1,5 +1,5 @@
 FROM debian:jessie
-MAINTAINER FluxoTI <lucasvs@outlook.com>
+MAINTAINER Lucas Souza <lucasvs@outlook.com>
 
 RUN useradd --system asterisk
 
@@ -47,7 +47,13 @@ RUN apt-get update -qq && \
     apt-get purge -y --auto-remove && rm -rf /var/lib/apt/lists/* && \
     pip install alembic
 
-ENV ASTERISK_VERSION=14.7.3 PJPROJECT_VERSION=2.7.1
+## Install sngrep
+RUN echo 'deb http://packages.irontec.com/debian jessie main' >> /etc/apt/sources.list && \
+    wget http://packages.irontec.com/public.key -q -O - | apt-key add - && \
+    apt-get update && \
+    apt-get install -y sngrep
+
+ENV ASTERISK_VERSION=14.7.6 PJPROJECT_VERSION=2.7.2
 COPY build-asterisk.sh /build-asterisk
 RUN /build-asterisk
 
