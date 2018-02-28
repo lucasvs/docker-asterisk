@@ -5,7 +5,7 @@ RUN useradd --system asterisk
 
 RUN apt-get update -qq && \
     DEBIAN_FRONTEND=noninteractive \
-    apt-get install -y --no-install-recommends \
+    apt-get install -yq --no-install-recommends \
             subversion \
             automake \
             aptitude \
@@ -53,9 +53,10 @@ RUN apt-get update -qq && \
 
 ## Install sngrep
 RUN echo 'deb http://packages.irontec.com/debian jessie main' >> /etc/apt/sources.list && \
+    apt-get update && apt-get -y -q install wget && \
     wget http://packages.irontec.com/public.key -q -O - | apt-key add - && \
     apt-get update -qq && \
-    apt-get install -y --no-install-recommends sngrep
+    apt-get install -yq sngrep
 
 ENV ASTERISK_VERSION=14.7.6 PJPROJECT_VERSION=2.7.2
 COPY build-asterisk.sh /build-asterisk
