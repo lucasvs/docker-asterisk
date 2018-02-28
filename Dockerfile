@@ -46,7 +46,7 @@ RUN apt-get update -qq && \
             wget \
             sox \
             libsox-fmt-mp3 \
-            vi \
+            vim \
             && \
     apt-get purge -y --auto-remove && rm -rf /var/lib/apt/lists/* && \
     pip install alembic
