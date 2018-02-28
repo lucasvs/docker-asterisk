@@ -3,6 +3,8 @@ MAINTAINER Lucas Souza <lucasvs@outlook.com>
 
 RUN useradd --system asterisk
 
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+
 RUN apt-get update -qq && \
     DEBIAN_FRONTEND=noninteractive \
     apt-get install -yq --no-install-recommends \
