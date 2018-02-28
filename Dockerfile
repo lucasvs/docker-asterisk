@@ -43,6 +43,10 @@ RUN apt-get update -qq && \
             python-pip \
             python-mysqldb \
             git \
+            wget \
+            sox \
+            libsox-fmt-mp3 \
+            vim \
             && \
     apt-get purge -y --auto-remove && rm -rf /var/lib/apt/lists/* && \
     pip install alembic
