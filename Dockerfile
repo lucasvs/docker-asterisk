@@ -44,6 +44,7 @@ RUN apt-get update -qq && \
             python-pip \
             python-mysqldb \
             git \
+            wget \
             && \
     apt-get purge -y --auto-remove && rm -rf /var/lib/apt/lists/* && \
     pip install alembic
@@ -54,7 +55,7 @@ RUN echo 'deb http://packages.irontec.com/debian jessie main' >> /etc/apt/source
     apt-get update && \
     apt-get install -y sngrep
 
-ENV ASTERISK_VERSION=14.7.3 PJPROJECT_VERSION=2.7.1
+ENV ASTERISK_VERSION=14.7.6 PJPROJECT_VERSION=2.7.1
 COPY build-asterisk.sh /build-asterisk
 RUN /build-asterisk
 
