@@ -1,11 +1,10 @@
 FROM debian:jessie
-MAINTAINER FluxoTI <lucasvs@outlook.com>
+LABEL maintainer="FluxoTI <lucasvs@outlook.com>"
 
 RUN useradd --system asterisk
 
-ARG DEBIAN_FRONTEND=noninteractive
-
-RUN apt-get update -qq && \
+RUN DEBIAN_FRONTEND=noninteractive \
+    apt-get update -qq -y && \
     apt-get install -y --no-install-recommends \
             subversion \
             automake \
@@ -44,19 +43,21 @@ RUN apt-get update -qq && \
             python-pip \
             python-mysqldb \
             git \
-            wget \
-            && \
-    apt-get purge -y --auto-remove && rm -rf /var/lib/apt/lists/* && \
+            wget && \
+    apt-get purge -y --auto-remove && \
+    rm -rf /var/lib/apt/lists/* && \
     pip install alembic
 
 ## Install sngrep
 RUN echo 'deb http://packages.irontec.com/debian jessie main' >> /etc/apt/sources.list && \
     wget http://packages.irontec.com/public.key -q -O - | apt-key add - && \
-    apt-get update && \
+    DEBIAN_FRONTEND=noninteractive \
+    apt-get update -y && \
     apt-get install -y sngrep
 
 ENV ASTERISK_VERSION=14.7.6 PJPROJECT_VERSION=2.7.1
+
 COPY build-asterisk.sh /build-asterisk
-RUN /build-asterisk
+RUN DEBIAN_FRONTEND=noninteractive /build-asterisk
 
 CMD ["/usr/sbin/asterisk", "-f"]

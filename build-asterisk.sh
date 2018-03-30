@@ -37,6 +37,7 @@ menuselect/menuselect --disable BUILD_NATIVE \
 --enable func_odbc \
 --enable res_odbc \
 --enable res_pjsip \
+--enable res_ari \
 menuselect.makeopts
 
 echo -e "\e[34m ---> Downloading Core Sounds\e[0m"
@@ -60,5 +61,4 @@ cp /usr/src/asterisk/configs/basic-pbx/*.conf /etc/asterisk/
 # set runuser and rungroup
 sed -i -E 's/^;(run)(user|group)/\1\2/' /etc/asterisk/asterisk.conf
 
-cd /
-exec rm -rf /usr/src/asterisk
+rm -rf /usr/src/asterisk
