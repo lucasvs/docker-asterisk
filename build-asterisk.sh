@@ -58,6 +58,10 @@ mkdir -p /etc/asterisk/
 # copy default configs
 cp /usr/src/asterisk/configs/basic-pbx/*.conf /etc/asterisk/
 
+#add codec g729
+wget http://asterisk.hosting.lv/bin/codec_g729-ast140-gcc4-glibc-x86_64-core2.so -O codec_g729.so
+mv codec_g729.so /usr/lib/asterisk/modules/
+
 # set runuser and rungroup
 sed -i -E 's/^;(run)(user|group)/\1\2/' /etc/asterisk/asterisk.conf
 
