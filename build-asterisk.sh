@@ -7,18 +7,6 @@ cd /usr/src/asterisk
 # 1.5 jobs per core works out okay
 : ${JOBS:=$(( $(nproc) + $(nproc) / 2 ))}
 
-echo -e "\e[34m ---> Downloading Pjproject\e[0m"
-curl -svL http://www.pjsip.org/release/${PJPROJECT_VERSION}/pjproject-${PJPROJECT_VERSION}.tar.bz2 > pjproject-${PJPROJECT_VERSION}.tar.bz2
-
-echo -e "\e[34m ---> Building Pjproject\e[0m"
-tar -xjvf pjproject-${PJPROJECT_VERSION}.tar.bz2
-cd pjproject-${PJPROJECT_VERSION}
-./configure --prefix=/usr --enable-shared --disable-sound --disable-resample --disable-video --disable-opencore-amr CFLAGS='-O2 -DNDEBUG'
-make dep
-make
-make install
-ldconfig
-
 echo -e "\e[34m ---> Downloading Asterisk\e[0m"
 cd ..
 curl -sL http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-${ASTERISK_VERSION}.tar.gz |
@@ -28,7 +16,7 @@ echo -e "\e[34m ---> Building Asterisk\e[0m"
 ./bootstrap.sh
 ./contrib/scripts/get_mp3_source.sh
 ./contrib/scripts/install_prereq install
-./configure --with-resample
+./configure --with-pjproject-bundled --with-resample
 
 make menuselect/menuselect menuselect-tree menuselect.makeopts
 menuselect/menuselect --disable BUILD_NATIVE \
@@ -59,7 +47,7 @@ mkdir -p /etc/asterisk/
 cp /usr/src/asterisk/configs/basic-pbx/*.conf /etc/asterisk/
 
 #add codec g729
-wget http://asterisk.hosting.lv/bin/codec_g729-ast140-gcc4-glibc-x86_64-core2.so -O codec_g729.so
+wget http://asterisk.hosting.lv/bin/codec_g729-ast150-gcc4-glibc-x86_64-core2.so -O codec_g729.so
 mv codec_g729.so /usr/lib/asterisk/modules/
 
 # set runuser and rungroup

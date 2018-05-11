@@ -55,7 +55,7 @@ RUN echo 'deb http://packages.irontec.com/debian jessie main' >> /etc/apt/source
     apt-get update -y && \
     apt-get install -y sngrep
 
-ENV ASTERISK_VERSION=14.7.6 PJPROJECT_VERSION=2.7.1
+ENV ASTERISK_VERSION=15.4.0
 
 COPY build-asterisk.sh /build-asterisk
 RUN DEBIAN_FRONTEND=noninteractive /build-asterisk
