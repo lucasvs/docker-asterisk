@@ -45,7 +45,6 @@ RUN DEBIAN_FRONTEND=noninteractive \
             git \
             wget && \
     apt-get purge -y --auto-remove && \
-    rm -rf /var/lib/apt/lists/* && \
     pip install alembic
 
 ## Install sngrep
@@ -53,7 +52,8 @@ RUN echo 'deb http://packages.irontec.com/debian jessie main' >> /etc/apt/source
     wget http://packages.irontec.com/public.key -q -O - | apt-key add - && \
     DEBIAN_FRONTEND=noninteractive \
     apt-get update -y && \
-    apt-get install -y sngrep
+    apt-get install -y sngrep && \
+    rm -rf /var/lib/apt/lists/*
 
 ENV ASTERISK_VERSION=15.4.0
 
