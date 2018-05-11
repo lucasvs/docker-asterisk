@@ -44,7 +44,7 @@ chmod -R 750 /var/spool/asterisk
 mkdir -p /etc/asterisk/
 
 # copy default configs
-cp /usr/src/asterisk/configs/basic-pbx/*.conf /etc/asterisk/
+make basic-pbx
 
 #add codec g729
 wget http://asterisk.hosting.lv/bin/codec_g729-ast150-gcc4-glibc-x86_64-core2.so -O codec_g729.so
