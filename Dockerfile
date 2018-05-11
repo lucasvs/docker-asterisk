@@ -10,10 +10,15 @@ RUN DEBIAN_FRONTEND=noninteractive \
             automake \
             aptitude \
             autoconf \
+            gcc \
+            make \
             binutils-dev \
             build-essential \
             ca-certificates \
             curl \
+            libncurses5-dev \
+            libpcap-dev \
+            libpcre3 \
             libcurl4-openssl-dev \
             libedit-dev \
             libgsm1-dev \
@@ -45,15 +50,17 @@ RUN DEBIAN_FRONTEND=noninteractive \
             git \
             wget && \
     apt-get purge -y --auto-remove && \
+    rm -rf /var/lib/apt/lists/* && \
     pip install alembic
 
 ## Install sngrep
-RUN echo 'deb http://packages.irontec.com/debian jessie main' >> /etc/apt/sources.list && \
-    wget http://packages.irontec.com/public.key -q -O - | apt-key add - && \
-    DEBIAN_FRONTEND=noninteractive \
-    apt-get update -y && \
-    apt-get install -y sngrep && \
-    rm -rf /var/lib/apt/lists/*
+RUN git clone https://github.com/irontec/sngrep && \
+    cd sngrep && \
+    ./bootstrap.sh \
+    ./configure && \
+    make && \
+    make install && \
+    rm -rf sngrep
 
 ENV ASTERISK_VERSION=15.4.0
 
