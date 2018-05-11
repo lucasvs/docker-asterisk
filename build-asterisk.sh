@@ -8,7 +8,6 @@ cd /usr/src/asterisk
 : ${JOBS:=$(( $(nproc) + $(nproc) / 2 ))}
 
 echo -e "\e[34m ---> Downloading Asterisk\e[0m"
-cd ..
 curl -sL http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-${ASTERISK_VERSION}.tar.gz |
     tar --strip-components 1 -xz
 
