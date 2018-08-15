@@ -30,7 +30,7 @@ menuselect.makeopts
 echo -e "\e[34m ---> Downloading Core Sounds\e[0m"
 # download more sounds
 for i in CORE-SOUNDS-EN; do
-    for j in ULAW ALAW G722 GSM SLN16; do
+    for j in ULAW ALAW G722 G729 GSM SLN16; do
         menuselect/menuselect --enable $i-$j menuselect.makeopts
     done
 done
