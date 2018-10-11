@@ -15,7 +15,7 @@ echo -e "\e[34m ---> Building Asterisk\e[0m"
 ./bootstrap.sh
 ./contrib/scripts/get_mp3_source.sh
 ./contrib/scripts/install_prereq install
-./configure --with-pjproject-bundled --with-resample
+./configure --with-pjproject-bundled --with-resample --with-jansson-bundled
 
 make menuselect/menuselect menuselect-tree menuselect.makeopts
 menuselect/menuselect --disable BUILD_NATIVE \
