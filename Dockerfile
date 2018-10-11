@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian:jessie
 LABEL maintainer="FluxoTI <lucasvs@outlook.com>"
 
 RUN useradd --system asterisk
@@ -48,7 +48,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
     pip install alembic
 
 ## Install sngrep
-RUN echo 'deb http://packages.irontec.com/debian stretch main' >> /etc/apt/sources.list && \
+RUN echo 'deb http://packages.irontec.com/debian jessie main' >> /etc/apt/sources.list && \
     wget http://packages.irontec.com/public.key -q -O - | apt-key add - && \
     DEBIAN_FRONTEND=noninteractive \
     apt-get update -y && \
