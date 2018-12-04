@@ -46,7 +46,7 @@ mkdir -p /etc/asterisk/
 make basic-pbx
 
 #add codec g729
-wget http://asterisk.hosting.lv/bin/codec_g729-ast150-gcc4-glibc-x86_64-core2.so -O codec_g729.so
+wget http://asterisk.hosting.lv/bin/codec_g729-ast160-gcc4-glibc-x86_64-core2.so -O codec_g729.so
 mv codec_g729.so /usr/lib/asterisk/modules/
 
 # set runuser and rungroup
