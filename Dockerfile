@@ -56,7 +56,7 @@ RUN echo 'deb http://packages.irontec.com/debian jessie main' >> /etc/apt/source
 
 RUN rm -rf /var/lib/apt/lists/*
 
-ENV ASTERISK_VERSION=16-current
+ENV ASTERISK_VERSION=16.3.0
 
 COPY build-asterisk.sh /build-asterisk
 RUN DEBIAN_FRONTEND=noninteractive /build-asterisk
