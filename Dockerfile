@@ -3,9 +3,14 @@ LABEL maintainer="FluxoTI <lucasvs@outlook.com>"
 
 RUN useradd --system asterisk
 
-RUN DEBIAN_FRONTEND=noninteractive \
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN echo "Package: *" >> /etc/apt/preferences.d/testing && \
+    echo "Pin: release a=testing" >> /etc/apt/preferences.d/testing && \
+    echo "Pin-Priority: 100" >> /etc/apt/preferences.d/testing && \
+    echo "deb http://ftp.us.debian.org/debian testing main contrib non-free" >> /etc/apt/sources.list && \
     apt-get update -qq -y && \
-    apt-get install -y --no-install-recommends \
+    apt-get install -y -t testing --no-install-recommends \
             subversion \
             automake \
             aptitude \
@@ -39,6 +44,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
             unixodbc \
             unixodbc-dev \
             libmyodbc \
+	    python-setuptools \
             python-dev \
             python-pip \
             python-mysqldb \
