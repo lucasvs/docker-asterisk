@@ -5,12 +5,12 @@ RUN useradd --system asterisk
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN echo "Package: *" >> /etc/apt/preferences.d/testing && \
-    echo "Pin: release a=testing" >> /etc/apt/preferences.d/testing && \
-    echo "Pin-Priority: 100" >> /etc/apt/preferences.d/testing && \
-    echo "deb http://ftp.us.debian.org/debian testing main contrib non-free" >> /etc/apt/sources.list && \
+RUN echo "Package: *" >> /etc/apt/preferences.d/bullseye && \
+    echo "Pin: release a=bullseye" >> /etc/apt/preferences.d/bullseye && \
+    echo "Pin-Priority: 100" >> /etc/apt/preferences.d/bullseye && \
+    echo "deb http://ftp.us.debian.org/debian bullseye main contrib non-free" >> /etc/apt/sources.list && \
     apt-get update -qq -y && \
-    apt-get install -y -t testing --no-install-recommends \
+    apt-get install -y -t bullseye --no-install-recommends \
             subversion \
             automake \
             aptitude \
