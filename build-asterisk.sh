@@ -38,6 +38,7 @@ done
 echo -e "\e[34m ---> Installing Asterisk\e[0m"
 make -j ${JOBS} all
 make install
+make install-headers
 chown -R asterisk:asterisk /var/*/asterisk
 chmod -R 750 /var/spool/asterisk
 mkdir -p /etc/asterisk/
