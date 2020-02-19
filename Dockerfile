@@ -65,6 +65,7 @@ RUN rm -rf /var/lib/apt/lists/*
 ENV ASTERISK_VERSION=17.1.0
 
 COPY build-asterisk.sh /build-asterisk
+COPY bfd.patch /var/
 RUN DEBIAN_FRONTEND=noninteractive /build-asterisk
 
 CMD ["/usr/sbin/asterisk", "-f"]
