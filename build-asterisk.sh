@@ -8,8 +8,11 @@ cd /usr/src/asterisk
 : ${JOBS:=$(( $(nproc) + $(nproc) / 2 ))}
 
 echo -e "\e[34m ---> Downloading Asterisk\e[0m"
-curl -sL http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-${ASTERISK_VERSION}.tar.gz |
+curl -sL http://downloads.asterisk.org/pub/telephony/asterisk/old-releases/asterisk-${ASTERISK_VERSION}.tar.gz |
     tar --strip-components 1 -xz
+
+echo -e "\e[34m ---> Patching Asterisk\e[0m"
+patch -p1 < /var/bfd.patch
 
 echo -e "\e[34m ---> Building Asterisk\e[0m"
 ./bootstrap.sh
