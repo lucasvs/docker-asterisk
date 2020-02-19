@@ -8,7 +8,7 @@ cd /usr/src/asterisk
 : ${JOBS:=$(( $(nproc) + $(nproc) / 2 ))}
 
 echo -e "\e[34m ---> Downloading Asterisk\e[0m"
-curl -sL http://downloads.asterisk.org/pub/telephony/asterisk/old-releases/asterisk-${ASTERISK_VERSION}.tar.gz |
+curl -sL http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-${ASTERISK_VERSION}.tar.gz |
     tar --strip-components 1 -xz
 
 echo -e "\e[34m ---> Patching Asterisk\e[0m"
@@ -50,7 +50,7 @@ mkdir -p /etc/asterisk/
 make basic-pbx
 
 #add codec g729
-wget http://asterisk.hosting.lv/bin/codec_g729-ast160-gcc4-glibc-x86_64-core2.so -O codec_g729.so
+wget http://asterisk.hosting.lv/bin/codec_g729-ast170-gcc4-glibc-x86_64-core2.so -O codec_g729.so
 mv codec_g729.so /usr/lib/asterisk/modules/
 
 # set runuser and rungroup
