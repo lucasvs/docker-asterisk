@@ -19,6 +19,7 @@ RUN echo "Package: *" >> /etc/apt/preferences.d/bullseye && \
             build-essential \
             ca-certificates \
             curl \
+            cmake \
             libcurl4-openssl-dev \
             libedit-dev \
             libgsm1-dev \
@@ -32,6 +33,7 @@ RUN echo "Package: *" >> /etc/apt/preferences.d/bullseye && \
             libsqlite3-dev \
             libsrtp0-dev \
             libssl-dev \
+            libtool \
             libvorbis-dev \
             libxml2-dev \
             libxslt1-dev \
@@ -67,5 +69,12 @@ ENV ASTERISK_VERSION=17.2.0
 COPY build-asterisk.sh /build-asterisk
 COPY bfd.patch /var/
 RUN DEBIAN_FRONTEND=noninteractive /build-asterisk
+
+# Install g729
+RUN git clone https://github.com/BelledonneCommunications/bcg729.git && cd bcg729 && \
+    cmake . && make && make install && cd .. && rm -r bcg729 && \
+    git clone https://github.com/arkadijs/asterisk-g72x.git && cd asterisk-g72x && \
+    ./autogen.sh && ./configure --with-bcg729 && make && make install && \
+    cd .. && rm -r asterisk-g72x
 
 CMD ["/usr/sbin/asterisk", "-f"]
