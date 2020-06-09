@@ -8,7 +8,7 @@ cd /usr/src/asterisk
 : ${JOBS:=$(( $(nproc) + $(nproc) / 2 ))}
 
 echo -e "\e[34m ---> Downloading Asterisk\e[0m"
-curl -sL http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-${ASTERISK_VERSION}.tar.gz |
+curl -sL https://github.com/asterisk/asterisk/archive/${ASTERISK_VERSION}.tar.gz |
     tar --strip-components 1 -xz
 
 echo -e "\e[34m ---> Patching Asterisk\e[0m"
