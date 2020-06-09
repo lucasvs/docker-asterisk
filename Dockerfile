@@ -64,7 +64,7 @@ RUN echo 'deb http://packages.irontec.com/debian jessie main' >> /etc/apt/source
 
 RUN rm -rf /var/lib/apt/lists/*
 
-ENV ASTERISK_VERSION=17.3.0
+ENV ASTERISK_VERSION=17.4.0
 
 COPY build-asterisk.sh /build-asterisk
 COPY bfd.patch /var/
