@@ -31,7 +31,6 @@ RUN echo "Package: *" >> /etc/apt/preferences.d/bullseye && \
             libspeex-dev \
             libspeexdsp-dev \
             libsqlite3-dev \
-            libsrtp0-dev \
             libssl-dev \
             libtool \
             libvorbis-dev \
@@ -53,7 +52,11 @@ RUN echo "Package: *" >> /etc/apt/preferences.d/bullseye && \
             git \
             wget && \
     apt-get purge -y --auto-remove && \
-    pip install alembic
+    pip install alembic && \
+    # install libsrtp
+    git clone https://github.com/cisco/libsrtp.git && cd libsrtp && \
+    git checkout && ./configure --prefix=/usr --enable-openssl && make && make install && \
+    cd .. && rm -r libsrtp
 
 ## Install sngrep
 RUN echo 'deb http://packages.irontec.com/debian jessie main' >> /etc/apt/sources.list && \
