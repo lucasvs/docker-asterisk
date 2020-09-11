@@ -1,16 +1,12 @@
-FROM debian:jessie
+FROM debian:bullseye
 LABEL maintainer="FluxoTI <lucasvs@outlook.com>"
 
 RUN useradd --system asterisk
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN echo "Package: *" >> /etc/apt/preferences.d/bullseye && \
-    echo "Pin: release a=bullseye" >> /etc/apt/preferences.d/bullseye && \
-    echo "Pin-Priority: 100" >> /etc/apt/preferences.d/bullseye && \
-    echo "deb http://ftp.us.debian.org/debian bullseye main contrib non-free" >> /etc/apt/sources.list && \
-    apt-get update -qq -y && \
-    apt-get install -y -t bullseye --no-install-recommends \
+RUN apt-get update -qq -y && apt-get upgrade -qq -y && \
+    apt-get install -y --no-install-recommends \
             subversion \
             automake \
             aptitude \
@@ -24,6 +20,7 @@ RUN echo "Package: *" >> /etc/apt/preferences.d/bullseye && \
             libedit-dev \
             libgsm1-dev \
             libjansson-dev \
+            default-libmysqlclient-dev \
             libogg-dev \
             libpopt-dev \
             libresample1-dev \
@@ -37,25 +34,23 @@ RUN echo "Package: *" >> /etc/apt/preferences.d/bullseye && \
             libxml2-dev \
             libxslt1-dev \
             portaudio19-dev \
-            python-pip \
+            python3-dev \
+            python3-pip \
             unixodbc-dev \
             uuid \
             uuid-dev \
             xmlstarlet \
             unixodbc \
             unixodbc-dev \
-            libmyodbc \
-	    python-setuptools \
-            python-dev \
-            python-pip \
-            python-mysqldb \
+            python3-setuptools \
+            gnupg2 \
             git \
             wget && \
     apt-get purge -y --auto-remove && \
-    pip install alembic && \
+    pip install alembic mysqlclient && \
     # install libsrtp
     git clone https://github.com/cisco/libsrtp.git && cd libsrtp && \
-    git checkout && ./configure --prefix=/usr --enable-openssl && make && make install && \
+    ./configure --prefix=/usr --enable-openssl && make && make install && \
     cd .. && rm -r libsrtp
 
 ## Install sngrep
@@ -67,10 +62,9 @@ RUN echo 'deb http://packages.irontec.com/debian jessie main' >> /etc/apt/source
 
 RUN rm -rf /var/lib/apt/lists/*
 
-ENV ASTERISK_VERSION=17.5.1
+ENV ASTERISK_VERSION=17.7.0
 
 COPY build-asterisk.sh /build-asterisk
-COPY bfd.patch /var/
 RUN DEBIAN_FRONTEND=noninteractive /build-asterisk
 
 # Install g729

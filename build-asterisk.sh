@@ -11,9 +11,6 @@ echo -e "\e[34m ---> Downloading Asterisk\e[0m"
 curl -sL https://github.com/asterisk/asterisk/archive/${ASTERISK_VERSION}.tar.gz |
     tar --strip-components 1 -xz
 
-echo -e "\e[34m ---> Patching Asterisk\e[0m"
-patch -p1 < /var/bfd.patch
-
 echo -e "\e[34m ---> Building Asterisk\e[0m"
 ./bootstrap.sh
 ./contrib/scripts/get_mp3_source.sh
