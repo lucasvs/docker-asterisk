@@ -5,8 +5,8 @@ RUN useradd --system asterisk
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update -qq -y && apt-get upgrade -qq -y && \
-    apt-get install -y --no-install-recommends \
+RUN apt update -qq -y && apt upgrade -qq -y && \
+    apt install -y --no-install-recommends \
             subversion \
             automake \
             aptitude \
@@ -16,11 +16,11 @@ RUN apt-get update -qq -y && apt-get upgrade -qq -y && \
             ca-certificates \
             curl \
             cmake \
+            default-libmysqlclient-dev \
             libcurl4-openssl-dev \
             libedit-dev \
             libgsm1-dev \
             libjansson-dev \
-            default-libmysqlclient-dev \
             libogg-dev \
             libpopt-dev \
             libresample1-dev \
@@ -33,6 +33,8 @@ RUN apt-get update -qq -y && apt-get upgrade -qq -y && \
             libvorbis-dev \
             libxml2-dev \
             libxslt1-dev \
+            mysql-common \
+            gnupg \
             portaudio19-dev \
             python3-dev \
             python3-pip \
@@ -42,25 +44,29 @@ RUN apt-get update -qq -y && apt-get upgrade -qq -y && \
             xmlstarlet \
             unixodbc \
             unixodbc-dev \
+            sngrep \
             python3-setuptools \
-            gnupg2 \
             git \
             wget && \
-    apt-get purge -y --auto-remove && \
+    apt purge -y --auto-remove && \
     pip install alembic mysqlclient && \
-    # install libsrtp
-    git clone https://github.com/cisco/libsrtp.git && cd libsrtp && \
+    rm -rf /var/lib/apt/lists/*
+
+# install mysql odbc driver
+RUN apt update -y && apt install -y odbcinst1debian2 && \
+    wget -Omultiarch-support.deb http://ftp.br.debian.org/debian/pool/main/g/glibc/multiarch-support_2.28-10_amd64.deb && \
+    dpkg -i multiarch-support.deb && rm multiarch-support.deb && \
+    wget -Olibmysqlclient18.deb http://archive.ubuntu.com/ubuntu/pool/main/m/mysql-5.5/libmysqlclient18_5.5.35+dfsg-1ubuntu1_amd64.deb && \
+    dpkg -i libmysqlclient18.deb && rm libmysqlclient18.deb && \
+    wget -Olibmyodbc.deb http://ftp.br.debian.org/debian/pool/main/m/myodbc/libmyodbc_5.1.10-3_amd64.deb && \
+    dpkg -i libmyodbc.deb && \
+    rm -rf /var/lib/apt/lists/*
+
+# install libsrtp
+RUN git clone https://github.com/cisco/libsrtp.git && cd libsrtp && \
     ./configure --prefix=/usr --enable-openssl && make && make install && \
-    cd .. && rm -r libsrtp
-
-## Install sngrep
-RUN echo 'deb http://packages.irontec.com/debian jessie main' >> /etc/apt/sources.list && \
-    wget http://packages.irontec.com/public.key -q -O - | apt-key add - && \
-    DEBIAN_FRONTEND=noninteractive \
-    apt-get update -y && \
-    apt-get install -y sngrep
-
-RUN rm -rf /var/lib/apt/lists/*
+    cd .. && rm -r libsrtp && \
+    rm -rf /var/lib/apt/lists/*
 
 ENV ASTERISK_VERSION=17.7.0
 
