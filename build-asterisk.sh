@@ -11,11 +11,14 @@ echo -e "\e[34m ---> Downloading Asterisk\e[0m"
 curl -sL https://github.com/asterisk/asterisk/archive/${ASTERISK_VERSION}.tar.gz |
     tar --strip-components 1 -xz
 
+echo -e "\e[34m ---> Patching PJSIP-pjproject to support external srtp\e[0m"
+sed -i 's/without-external-srtp/with-external-srtp/g' third-party/pjproject/Makefile.rules
+
 echo -e "\e[34m ---> Building Asterisk\e[0m"
 ./bootstrap.sh
 ./contrib/scripts/get_mp3_source.sh
 ./contrib/scripts/install_prereq install
-./configure --with-pjproject-bundled --with-resample --with-jansson-bundled
+./configure --with-pjproject-bundled --with-resample --with-srtp --with-jansson-bundled
 
 make menuselect/menuselect menuselect-tree menuselect.makeopts
 menuselect/menuselect --disable BUILD_NATIVE \
@@ -23,6 +26,7 @@ menuselect/menuselect --disable BUILD_NATIVE \
 --enable codec_opus \
 --enable func_odbc \
 --enable res_odbc \
+--enable res_srtp \
 --enable res_pjsip \
 --enable res_ari \
 menuselect.makeopts

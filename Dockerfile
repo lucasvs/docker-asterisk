@@ -28,6 +28,8 @@ RUN apt update -qq -y && apt upgrade -qq -y && \
             libspeex-dev \
             libspeexdsp-dev \
             libsqlite3-dev \
+            libsrtp2-1 \
+            libsrtp2-dev \
             libssl-dev \
             libtool \
             libvorbis-dev \
@@ -60,12 +62,6 @@ RUN apt update -y && apt install -y odbcinst1debian2 && \
     dpkg -i libmysqlclient18.deb && rm libmysqlclient18.deb && \
     wget -Olibmyodbc.deb http://ftp.br.debian.org/debian/pool/main/m/myodbc/libmyodbc_5.1.10-3_amd64.deb && \
     dpkg -i libmyodbc.deb && \
-    rm -rf /var/lib/apt/lists/*
-
-# install libsrtp
-RUN git clone https://github.com/cisco/libsrtp.git && cd libsrtp && \
-    ./configure --prefix=/usr --enable-openssl && make && make install && \
-    cd .. && rm -r libsrtp && \
     rm -rf /var/lib/apt/lists/*
 
 ENV ASTERISK_VERSION=17.7.0
