@@ -22,6 +22,7 @@ echo -e "\e[34m ---> Building Asterisk\e[0m"
 
 make menuselect/menuselect menuselect-tree menuselect.makeopts
 menuselect/menuselect --disable BUILD_NATIVE \
+--enable DONT_OPTIMIZE \
 --enable BETTER_BACKTRACES  \
 --enable codec_opus \
 --enable func_odbc \
