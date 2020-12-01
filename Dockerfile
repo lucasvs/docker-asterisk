@@ -64,7 +64,7 @@ RUN apt update -y && apt install -y odbcinst1debian2 && \
     dpkg -i libmyodbc.deb && \
     rm -rf /var/lib/apt/lists/*
 
-ENV ASTERISK_VERSION=18.0.1
+ENV ASTERISK_VERSION=18.1.0
 
 COPY build-asterisk.sh /build-asterisk
 RUN DEBIAN_FRONTEND=noninteractive /build-asterisk
