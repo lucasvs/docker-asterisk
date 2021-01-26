@@ -1,6 +1,6 @@
 # Asterisk
 
-Dockerfile to build [Asterisk](https://github.com/asterisk/asterisk) 17.0.0 with PJSIP Realtime.
+Dockerfile to build [Asterisk](https://github.com/asterisk/asterisk) 18.2.0 with PJSIP Realtime.
 
 ### Includes
  - Pjproject-bundled
