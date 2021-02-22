@@ -2,7 +2,6 @@
 set -ex
 
 mkdir -p /usr/src/asterisk
-cp 0080-fix-sdp-neg-modify-local-offer.patch /usr/src/asterisk
 cd /usr/src/asterisk
 
 # 1.5 jobs per core works out okay
@@ -14,10 +13,6 @@ curl -sL https://github.com/asterisk/asterisk/archive/${ASTERISK_VERSION}.tar.gz
 
 echo -e "\e[34m ---> Patching PJSIP-pjproject to support external srtp\e[0m"
 sed -i 's/without-external-srtp/with-external-srtp/g' third-party/pjproject/Makefile.rules
-
-echo -e "\e[34m ---> Add fix dsp-neg-modify-local-offer.patch to PJSIP-pjproject\e[0m"
-cp 0080-fix-sdp-neg-modify-local-offer.patch third-party/pjproject/patches
-ls third-party/pjproject/patches
 
 echo -e "\e[34m ---> Building Asterisk\e[0m"
 ./bootstrap.sh
