@@ -12,9 +12,7 @@ Dockerfile to build [Asterisk](https://github.com/asterisk/asterisk) 18.19.0 wit
 ```yml
 FROM ghcr.io/lucasvs/docker-asterisk:18.19.0-v1
 
-# copy default configuration files from asterisk github repository
-COPY --from=daemon-builder /go/bin/daemon /usr/bin/
-COPY entrypoint.sh scripts/* /usr/bin/
+# Copy default configuration files from asterisk github repository
 COPY internal/conf/* /etc/asterisk/
 COPY internal/contrib/ /usr/share/asterisk/contrib/
 COPY internal/odbc/* /etc/
