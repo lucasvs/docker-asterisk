@@ -1,5 +1,7 @@
 # Asterisk
 
+[![Release](https://github.com/lucasvs/docker-asterisk/actions/workflows/release.yml/badge.svg)](https://github.com/lucasvs/docker-asterisk/actions/workflows/release.yml)
+
 Dockerfile to build [Asterisk](https://github.com/asterisk/asterisk) 18.19.0 with PJSIP Realtime.
 
 ### Includes
@@ -8,7 +10,7 @@ Dockerfile to build [Asterisk](https://github.com/asterisk/asterisk) 18.19.0 wit
  - Codec g729 (http://asterisk.hosting.lv/bin/codec_g729-ast150-gcc4-glibc-x86_64-core2.so)
 
 
-# How To use
+### How to use
 ```yml
 FROM ghcr.io/lucasvs/docker-asterisk:18.19.0-v1
 
