@@ -56,21 +56,21 @@ RUN apt update -qq -y && apt upgrade -qq -y && \
 
 # install mysql odbc driver
 RUN apt update -y && apt install -y odbcinst1debian2 && \
-    wget -Omultiarch-support.deb http://ftp.br.debian.org/debian/pool/main/g/glibc/multiarch-support_2.28-10_amd64.deb && \
+    wget -Omultiarch-support.deb http://ftp.br.debian.org/debian/pool/main/g/glibc/multiarch-support_2.28-10+deb10u1_amd64.deb && \
     dpkg -i multiarch-support.deb && rm multiarch-support.deb && \
     wget -Olibmysqlclient18.deb http://archive.ubuntu.com/ubuntu/pool/main/m/mysql-5.5/libmysqlclient18_5.5.35+dfsg-1ubuntu1_amd64.deb && \
     dpkg -i libmysqlclient18.deb && rm libmysqlclient18.deb && \
-    wget -Olibmyodbc.deb http://ftp.br.debian.org/debian/pool/main/m/myodbc/libmyodbc_5.1.10-3_amd64.deb && \
+    wget -Olibmyodbc.deb http://archive.ubuntu.com/ubuntu/pool/universe/m/myodbc/libmyodbc_5.1.10-3_amd64.deb && \
     dpkg -i libmyodbc.deb && \
     rm -rf /var/lib/apt/lists/*
 
-ENV ASTERISK_VERSION=18.10.0
+ENV ASTERISK_VERSION=18.19.0
 
 COPY build-asterisk.sh /build-asterisk
 RUN DEBIAN_FRONTEND=noninteractive /build-asterisk
 
 # Install g729
-RUN git clone https://github.com/BelledonneCommunications/bcg729.git && cd bcg729 && \
+RUN git clone https://github.com/BelledonneCommunications/bcg729.git --branch 1.1.1 && cd bcg729 && \
     cmake . && make && make install && cd .. && rm -r bcg729 && \
     git clone https://github.com/arkadijs/asterisk-g72x.git && cd asterisk-g72x && \
     ./autogen.sh && ./configure --with-bcg729 && make && make install && \
