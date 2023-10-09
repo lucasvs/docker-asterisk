@@ -2,7 +2,7 @@
 
 [![Release](https://github.com/lucasvs/docker-asterisk/actions/workflows/release.yml/badge.svg)](https://github.com/lucasvs/docker-asterisk/actions/workflows/release.yml)
 
-Dockerfile to build [Asterisk](https://github.com/asterisk/asterisk) 18.19.0 with PJSIP Realtime.
+Dockerfile to build [Asterisk](https://github.com/asterisk/asterisk) 20.4.0 with PJSIP Realtime.
 
 ### Includes
  - Pjproject-bundled
